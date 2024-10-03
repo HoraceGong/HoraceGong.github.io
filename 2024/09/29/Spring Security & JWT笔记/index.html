@@ -175,35 +175,35 @@
             
             <span class="tag">
                 
-                <a href="/tags/Java/" style="color: #00bcd4">
+                <a href="/tags/Java/" style="color: #ffa2c4">
                     Java
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Java-Web/" style="color: #ff7d73">
+                <a href="/tags/Java-Web/" style="color: #00a596">
                     Java Web
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Spring/" style="color: #ffa2c4">
+                <a href="/tags/Spring/" style="color: #03a9f4">
                     Spring
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Spring-Security/" style="color: #00bcd4">
+                <a href="/tags/Spring-Security/" style="color: #ff7d73">
                     Spring Security
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Micro-service/" style="color: #ffa2c4">
+                <a href="/tags/Micro-service/" style="color: #00bcd4">
                     Micro-service
                 </a>
             </span>
@@ -213,7 +213,7 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Spring Security是Spring家族中的一个安全管理框架，相比于Shiro，它提供了更丰富的功能。一般来说中大型项目都是使用Spring Security来做安全框架。</p>
+        <h1 id="0-简介"><a href="#0-简介" class="headerlink" title="0.简介"></a>0.简介</h1><p>Spring Security是Spring家族中的一个安全管理框架，相比于Shiro，它提供了更丰富的功能。一般来说中大型项目都是使用Spring Security来做安全框架。</p>
 <p>Web应用中最重要的安全管理内容：<strong>认证</strong>和<strong>授权</strong>。</p>
 <p><strong>认证：验证当前访问系统的是不是本系统的用户，并且要确认具体是哪个用户</strong></p>
 <p><strong>授权：经过认证后判断当前用户是否有权限进行某个操作</strong></p>
@@ -221,7 +221,7 @@
 
 
 
-<h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><p>第一步：创建项目并引入Springboot</p>
+<h1 id="1-快速入门"><a href="#1-快速入门" class="headerlink" title="1.快速入门"></a>1.快速入门</h1><p>第一步：创建项目并引入Springboot</p>
 <pre><code class="xml">&lt;dependencies&gt;
   &lt;dependency&gt;
     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
@@ -265,6 +265,28 @@ public class index &#123;
 <img src="https://picturebedforhorace.oss-cn-beijing.aliyuncs.com/%E6%88%AA%E5%B1%8F2024-10-03%2014.44.50.png" alt="运行成功" style="zoom:50%;" />
 
 <p>运行成功！</p>
+<p>第四步，引入Spring Security</p>
+<pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p><strong>注意：此时不要写版本号<version>，否则pom文件会报错</strong></p>
+<p>此时再次访问接口，自动转跳到Spring Security的自带的登录页面</p>
+<img src="https://picturebedforhorace.oss-cn-beijing.aliyuncs.com/%E6%88%AA%E5%B1%8F2024-10-03%2015.07.11.png" alt="登录页面" style="zoom:50%;" />
+
+<p>默认用户名为user，默认密码在控制台输出。点击sign in后，再次进入原本的页面。</p>
+<p>此时Spring Security已经可以运行！</p>
+<h1 id="2-认证"><a href="#2-认证" class="headerlink" title="2.认证"></a>2.认证</h1><h2 id="2-1-登录校验流程"><a href="#2-1-登录校验流程" class="headerlink" title="2.1 登录校验流程"></a>2.1 登录校验流程</h2><img src="https://picturebedforhorace.oss-cn-beijing.aliyuncs.com/%E6%88%AA%E5%B1%8F2024-10-03%2015.45.26.png" alt="校验流程" style="zoom:50%;" />
+
+<h2 id="2-2-Spring-Security原理"><a href="#2-2-Spring-Security原理" class="headerlink" title="2.2 Spring Security原理"></a>2.2 Spring Security原理</h2><p>Spring Security本身就是一个过滤器链。</p>
+<img src="https://picturebedforhorace.oss-cn-beijing.aliyuncs.com/%E6%88%AA%E5%B1%8F2024-10-03%2020.02.56.png" alt="过滤器链" style="zoom:50%;" />
+
+<ul>
+<li><strong>UsernamePasswordAuthenticationFilter：</strong>处理在登录页面填写了用户名和密码后的登录请求。入门案例的认证工作主要由它负责。</li>
+<li><strong>ExceptionTranslationFilter：</strong>处理过滤器链充抛出的任何AccessDeniedException和AuthenticationException。</li>
+<li><strong>FilterSecurityInterceptor：</strong>负责权限校验。</li>
+</ul>
 
     </div>
     

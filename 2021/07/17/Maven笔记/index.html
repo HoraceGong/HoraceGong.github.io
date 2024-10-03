@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Maven笔记 | Gong&#39;s Blog</title>
+    <meta name="author" content="Horace Gong" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>GONG&#39;S BLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;GONG&#39;S BLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>Maven笔记</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2021/7/17
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/Java-Web/" style="color: #ff7d73">
+                    Java Web
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Maven/" style="color: #03a9f4">
+                    Maven
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="Maven简介"><a href="#Maven简介" class="headerlink" title="Maven简介"></a>Maven简介</h1><p>Maven的本质是一个项目管理工具，将项目开发和管理过程抽象成一个项目对象模型(POM)<br>POM (Project Object Model)：项目对象模型。</p>
+<span id="more"></span>
+
+<img src="https://picturebedforhorace.oss-cn-beijing.aliyuncs.com/%E6%88%AA%E5%B1%8F2021-07-17%20%E4%B8%8B%E5%8D%886.51.07.png" alt="Maven模型" style="zoom:50%;" />
+
+<p>Maven的作用：</p>
+<ol>
+<li>项目构建：提供标准的、跨平台的自动化项目构建方式</li>
+<li>依赖管理：方便快捷的管理项目依赖的资源（jar包），避免资源间的版本冲突问题</li>
+<li>统一开发结构：提供标准的、统一的项目结构</li>
+</ol>
+<h1 id="Maven基础概念"><a href="#Maven基础概念" class="headerlink" title="Maven基础概念"></a>Maven基础概念</h1><p>仓库：用于存储资源，包含各种jar包<br>仓库分类：本地仓库和远程仓库（私服和中央仓库）</p>
+<p>坐标：Maven中的坐标用于描述仓库中资源的位置<br>坐标的主要组成：<br>        groupId：定义当前Maven项目隶属组织名称（通常是域名反写）<br>        artifactId：定义当前Maven项目名称（通常是模块名称）<br>        version：定义当前版本号<br>        packaging：定义该项目的打包方式<br>坐标的作用：使用唯一的标识，唯一性定位资源位置，通过该标识可以将资源的识别与下载交由机器完成。</p>
+<p>仓库配置：<br>本地仓库配置：默认位置与自定义位置<br>远程仓库配置：</p>
+<pre><code class="xml">&lt;repositories&gt; 
+  &lt;repository&gt;
+        &lt;id&gt;central&lt;/id&gt;
+        &lt;name&gt;Central Repository&lt;/name&gt; 
+    &lt;url&gt;https://repo.maven.apache.org/maven2&lt;/url&gt; &lt;layout&gt;default&lt;/layout&gt;
+        &lt;snapshots&gt;
+            &lt;enabled&gt;false&lt;/enabled&gt; 
+    &lt;/snapshots&gt;
+    &lt;/repository&gt; 
+&lt;/repositories&gt;
+</code></pre>
+<p>镜像仓库配置：</p>
+<pre><code class="xml">&lt;mirrors&gt;
+    &lt;mirror&gt;
+    &lt;!-- 此镜像的唯一标识符，用来区分不同的mirror元素 --&gt;
+        &lt;id&gt;nexus-aliyun&lt;/id&gt;
+    &lt;!-- 对那种仓库进行镜像（就是替代哪种仓库）--&gt;
+        &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;
+    &lt;!-- 镜像名称 --&gt;
+        &lt;name&gt;Nexus aliyun&lt;/name&gt;
+    &lt;!-- 镜像URL --&gt;
+        &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public&lt;/url&gt;
+    &lt;/mirror&gt; 
+&lt;/mirrors&gt;
+</code></pre>
+<h1 id="Maven项目"><a href="#Maven项目" class="headerlink" title="Maven项目"></a>Maven项目</h1><h2 id="Maven命令构建项目"><a href="#Maven命令构建项目" class="headerlink" title="Maven命令构建项目"></a>Maven命令构建项目</h2><p>Maven构建命令使用mvn开头，后面加功能参数，可以一次执行多个命令，使用空格分隔</p>
+<pre><code class="Maven">mvn compile #编译
+mvn clean #清理
+mvn test #测试
+mvn package	#打包
+mvn install #安装到本地仓库
+</code></pre>
+<h2 id="IDEA生成Maven项目"><a href="#IDEA生成Maven项目" class="headerlink" title="IDEA生成Maven项目"></a>IDEA生成Maven项目</h2><p>使用原型创建Maven项目与不使用原型创建Maven项目<br>例：使用原型创建web项目，选择archetype-webapp进行项目创建，添加Tomcat插件</p>
+<pre><code class="xml">&lt;build&gt; 
+  &lt;plugins&gt;
+        &lt;plugin&gt; 
+      &lt;groupId&gt;org.apache.tomcat.maven&lt;/groupId&gt; 
+      &lt;artifactId&gt;tomcat7-maven-plugin&lt;/artifactId&gt; 				
+      &lt;version&gt;2.1&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;port&gt;80&lt;/port&gt;
+                &lt;path&gt;/&lt;/path&gt; 
+      &lt;/configuration&gt;
+        &lt;/plugin&gt; 
+  &lt;/plugins&gt;
+&lt;/build&gt;
+</code></pre>
+<h1 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h1><ol>
+<li><p>依赖配置</p>
+<p>依赖指的是当前项目运行所需要的jar，一个项目可以设置多个依赖<br>格式：</p>
+<pre><code class="xml">&lt;!--设置当前项目所依赖的所有jar--&gt;
+&lt;dependencies&gt;
+  &lt;!--设置具体的依赖--&gt;
+  &lt;dependency&gt;
+    &lt;!--依赖所属群组id--&gt;
+    &lt;groupId&gt;&lt;/groupId&gt;
+    &lt;!--依赖所属项目id--&gt;
+    &lt;artifactId&gt;&lt;/artifactId&gt;
+    &lt;!--依赖版本号--&gt;
+    &lt;version&gt;&lt;/version&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+</li>
+<li><p>依赖传递</p>
+<p>依赖具有传递性，包括直接传递和间接传递。<br>直接传递：在当前项目中通过依赖配置建立的依赖关系（A使用B，A和B就是直接传递）<br>间接传递：被依赖的资源如果依赖其他资源，当前项目间接依赖其他资源（比较拗口，意思是如果A依赖B，而B依赖C，那么A和C之间就是间接传递）</p>
+<p>依赖传递的冲突问题：路径优先：当依赖中出现相同的资源时，层级越深，优先级越低，层级越浅，优先级越高<br>声明优先：当资源在相同层级被依赖时，配置顺序靠前的覆盖配置顺序靠后的<br>特殊优先：当同级配置了相同资源的不同版本，后配置的覆盖先配置的</p>
+</li>
+</ol>
+<img src="https://picturebedforhorace.oss-cn-beijing.aliyuncs.com/%E6%88%AA%E5%B1%8F2021-07-17%20%E4%B8%8B%E5%8D%886.49.40.png" alt="依赖传递" style="zoom:50%;" />
+
+<ol>
+<li><p>可选依赖</p>
+<p>可选依赖指的是对外隐藏当前所依赖的资源</p>
+<pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;&lt;/groupId&gt;
+  &lt;artifactId&gt;&lt;/artifactId&gt;
+  &lt;version&gt;&lt;/version&gt;
+  &lt;!--添加下面这一行--&gt;
+  &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;
+</code></pre>
+</li>
+<li><p>排除依赖</p>
+<p>排除依赖指主动断开依赖的资源，被排除的资源无需指定版本</p>
+<pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;&lt;/groupId&gt;
+  &lt;artifactId&gt;&lt;/artifactId&gt;
+  &lt;version&gt;&lt;/version&gt;
+  &lt;exclusions&gt;
+    &lt;exclusion&gt;
+      &lt;groupId&gt;&lt;/groupId&gt;
+      &lt;artifactId&gt;&lt;/artifactId&gt;
+    &lt;/exclusion&gt;
+  &lt;/exclusions&gt;
+&lt;/dependency&gt;
+</code></pre>
+</li>
+<li><p>依赖范围</p>
+<p>依赖的jar包默认情况可以在任何地方使用，可以通过scope标签设定其作用范围<br>作用范围：<br>主程序范围有效（main文件夹范围内）<br>测试程序范围有效（test文件夹范围内）<br>是否参与打包（package文件夹范围内）</p>
+<img src="https://picturebedforhorace.oss-cn-beijing.aliyuncs.com/%E6%88%AA%E5%B1%8F2021-07-17%20%E4%B8%8B%E5%8D%887.10.15.png" alt="依赖范围" style="zoom:50%;" />
+
+
+
+<h1 id="生命周期与插件"><a href="#生命周期与插件" class="headerlink" title="生命周期与插件"></a>生命周期与插件</h1><p>Maven项目构建生命周期描述的是一次构建过程经历了多少个事件<br>Maven对项目构建的生命周期划分为3套<br>    clean：清理工作<br>    default：核心工作，例如编译、测试、打包、部署等<br>        compile – test-compile – test – packege – Install		<br>    site：产生报告，发布站点等<br>插件：<br>插件与生命周期内的阶段绑定，在执行到对应的生命周期时执行对应的插件功能</p>
+<pre><code class="xml">&lt;build&gt; 
+  &lt;plugins&gt;
+        &lt;plugin&gt; 
+      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; 
+      &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt; 
+      &lt;version&gt;2.2.1&lt;/version&gt;
+            &lt;executions&gt;
+                &lt;execution&gt; 
+          &lt;goals&gt;
+                        &lt;goal&gt;jar&lt;/goal&gt; 
+          &lt;/goals&gt;
+                    &lt;phase&gt; generate-test-resources&lt;/phase&gt; &lt;/execution&gt;
+                &lt;/executions&gt; 
+    &lt;/plugin&gt;
+    &lt;/plugins&gt; 
+&lt;/build&gt;
+</code></pre>
+<h1 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h1><p>作用：聚合用于快速构建Maven工程，一次性构建多个项目&#x2F;模块。<br>制作方式：创建一个空模块，打包类型定义为pom</p>
+<pre><code class="xml">&lt;packaging&gt;pom&lt;/packaging&gt;
+</code></pre>
+<p>定义当前模块进行构建操作时关联的其他模块名称</p>
+<pre><code class="xml">&lt;modules&gt;
+  &lt;module&gt;模块地址&lt;/module&gt;
+  &lt;module&gt;模块地址&lt;/module&gt;
+  &lt;module&gt;模块地址&lt;/module&gt;
+  &lt;module&gt;模块地址&lt;/module&gt;
+&lt;/modules&gt;
+</code></pre>
+<p>注意：参与聚合操作的模块最终执行顺序与模块间的依赖关系有关，与配置顺序无关</p>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p>作用：通过继承可以实现在子工程中沿用父工程中的配置（与Java类似）<br>制作方式：在子工程中生命其父工程坐标与对应的位置</p>
+<pre><code class="xml">&lt;!--定义该工程的父工程--&gt;
+&lt;parent&gt;
+  &lt;groupId&gt;&lt;/groupId&gt;
+  &lt;artifactId&gt;&lt;/artifactId&gt;
+  &lt;version&gt;&lt;/version&gt;
+  &lt;!--填写父工程的pom文件--&gt;
+  &lt;relativePath&gt;父工程pom文件地址&lt;/relativePath&gt;
+&lt;/parent&gt;
+</code></pre>
+<p>在父工程中定义依赖管理</p>
+<pre><code class="xml">&lt;!--声明此处进行依赖管理--&gt;
+&lt;dependencyManagement&gt;
+  &lt;!--具体的依赖--&gt;
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;&lt;/groupId&gt;
+      &lt;artifactId&gt;&lt;/artifactId&gt;
+      &lt;version&gt;&lt;/version&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/dependencyManagement&gt;
+</code></pre>
+<p>继承依赖使用：在子工程中定义依赖关系，无需声明依赖版本，版本参照父工程中依赖的版本</p>
+<pre><code class="xml">&lt;dependencies&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;&lt;/groupId&gt;
+    &lt;artifactId&gt;&lt;/artifactId&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h2 id="继承与聚合"><a href="#继承与聚合" class="headerlink" title="继承与聚合"></a>继承与聚合</h2><p>作用：聚合用于快速构建项目，继承用于快速配置<br>相同点：<br>    聚合与继承的pom.xml文件打包方式均为pom，可以将两种关系制作到同一个pom文件中<br>    聚合与继承均属于设计型模块，并无实际的模块内容<br>不同点：聚合是在当前模块中配置关系，聚合可以感知到参与聚合的模块有哪些；继承是在子模块中配置关系，父模块无法感知哪些子模块继承了自己。</p>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><ol>
+<li><p>自定义属性</p>
+<p>作用：等同于定义变量，方便统一维护<br>定义格式：</p>
+<pre><code class="xml">&lt;!--定义自定义属性--&gt;
+&lt;properties&gt; 
+  &lt;spring.version&gt;5.1.9.RELEASE&lt;/spring.version&gt;
+    &lt;junit.version&gt;4.12&lt;/junit.version&gt;
+&lt;/properties&gt;
+</code></pre>
+<p>调用格式：</p>
+<pre><code class="xml">&lt;dependency&gt; 
+  &lt;groupId&gt;org.springframework&lt;/groupId&gt; 
+  &lt;artifactId&gt;spring-context&lt;/artifactId&gt; 
+  &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+</li>
+<li><p>内置属性</p>
+<p>作用：使用Maven内置属性，快速配置<br>调用格式：</p>
+<pre><code class="xml">$&#123;basedir&#125;
+$&#123;version&#125;
+</code></pre>
+</li>
+<li><p>Setting属性</p>
+<p>作用：使用Maven配置文件setting.xml中的标签属性，用于动态配置<br>调用格式：</p>
+<pre><code class="xml">$&#123;settings.localRepository&#125;
+</code></pre>
+</li>
+<li><p>Java系统属性</p>
+<p>作用：读取Java系统属性<br>调用格式：</p>
+<pre><code class="xml">$&#123;user.home&#125;
+</code></pre>
+<p>系统属性查询方式：</p>
+<pre><code class="xml">mvn help:system
+</code></pre>
+</li>
+<li><p>环境变量属性</p>
+<p>作用：使用Maven配置文件setting.xml中的标签属性，用于动态配置<br>调用格式：</p>
+<pre><code class="xml">$&#123;env.JAVA_HOME&#125;
+</code></pre>
+<p>环境变量属性查询方式：</p>
+<pre><code class="xml">mvn help:system
+</code></pre>
+</li>
+</ol>
+<h1 id="版本管理"><a href="#版本管理" class="headerlink" title="版本管理"></a>版本管理</h1><p>SNAPSHOT（快照版本）		RELEASE（发布版本）<br>工程版本号约定</p>
+<img src="https://picturebedforhorace.oss-cn-beijing.aliyuncs.com/%E6%88%AA%E5%B1%8F2021-07-17%20%E4%B8%8B%E5%8D%888.24.46.png" alt="版本管理" style="zoom:50%;" />
+
+
+
+<h1 id="资源配置"><a href="#资源配置" class="headerlink" title="资源配置"></a>资源配置</h1><p>配置文件引用pom属性<br>作用：在任意配置文件中加载pom文件中定义的属性<br>调用格式</p>
+<pre><code class="xml">$&#123;地址&#125;
+</code></pre>
+<p>开启配置文件加载pom属性</p>
+<pre><code class="xml">&lt;!--配置资源文件对应的信息--&gt;
+&lt;resources&gt;
+  &lt;resource&gt;
+    &lt;!--设定配置文件对应的位置目录，支持使用属性动态设定路径--&gt;
+    &lt;directory&gt;地址&lt;/directory&gt;
+    &lt;!--开启对配置文件的资源加载过滤--&gt;
+    &lt;filtering&gt;true&lt;/filtering&gt;
+  &lt;/resource&gt;
+&lt;/resources&gt;
+</code></pre>
+<h1 id="多环境开发配置"><a href="#多环境开发配置" class="headerlink" title="多环境开发配置"></a>多环境开发配置</h1><pre><code class="xml">&lt;!--创建多环境--&gt;
+&lt;profiles&gt;
+  &lt;!--定义具体的环境：生产环境--&gt;
+  &lt;profile&gt;
+    &lt;!--定义环境对应的唯一名称--&gt;
+    &lt;id&gt;开发环境名称1&lt;/id&gt;
+    &lt;!--定义环境中的专用的属性值--&gt;
+    &lt;properties&gt;
+      &lt;jdbc.url&gt;jdbc链接&lt;/jdbc.url&gt;
+    &lt;/properties&gt;
+    &lt;activation&gt;
+      &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+    &lt;/activation&gt;
+  &lt;/profile&gt;
+  &lt;!--定义具体的环境：开发环境--&gt;
+  &lt;!--格式同上--&gt;
+&lt;/profiles&gt;
+</code></pre>
+<h1 id="私服"><a href="#私服" class="headerlink" title="私服"></a>私服</h1><p>使用Nexus，此处不再赘述。</p>
+</li>
+</ol>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2024 Gong&#39;s Blog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Horace Gong
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>
