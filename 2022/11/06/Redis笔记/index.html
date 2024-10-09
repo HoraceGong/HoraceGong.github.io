@@ -175,6 +175,13 @@
             
             <span class="tag">
                 
+                <a href="/tags/note/" style="color: #ffa2c4">
+                    note
+                </a>
+            </span>
+            
+            <span class="tag">
+                
                 <a href="/tags/Redis/" style="color: #ff7d73">
                     Redis
                 </a>
@@ -182,22 +189,15 @@
             
             <span class="tag">
                 
-                <a href="/tags/Java-Web/" style="color: #00bcd4">
+                <a href="/tags/Java-Web/" style="color: #00a596">
                     Java Web
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/NoSQL/" style="color: #ffa2c4">
+                <a href="/tags/NoSQL/" style="color: #03a9f4">
                     NoSQL
-                </a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/note/" style="color: #00a596">
-                    note
                 </a>
             </span>
             
@@ -216,6 +216,145 @@
 </ul>
 <span id="more"></span>
 
+<h1 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h1><p>Redis支持五种数据类型：<code>string</code>、<code>hash</code>、<code>list</code>、<code>set</code>、<code>zset</code></p>
+<ul>
+<li><p>String：Redis的最基本类型，一个key对应一个value。string类型是二进制安全的，也就是说string可以包含任何数据，比如jpg图片或者序列化的对象。<strong>string一个键最大能存储512MB</strong>。</p>
+<pre><code class="shell">redis 127.0.0.1:6379&gt; SET name &quot;w3cschool.cn&quot;
+OK
+redis 127.0.0.1:6379&gt; GET name
+&quot;w3cschool.cn&quot;
+</code></pre>
+</li>
+<li><p>Hash：一个键值对集合。是一个string类型的field和value的映射表，hash特别适合存储对象。</p>
+<pre><code class="shell">redis 127.0.0.1:6379&gt; HMSET user:1 username w3cschool.cn password w3cschool.cn points 200
+OK
+redis 127.0.0.1:6379&gt; HGETALL user:1
+1) &quot;username&quot;
+2) &quot;w3cschool.cn&quot;
+3) &quot;password&quot;
+4) &quot;w3cschool.cn&quot;
+5) &quot;points&quot;
+6) &quot;200&quot;
+redis 127.0.0.1:6379&gt;
+</code></pre>
+<p>每个hash可以存储 2^32 - 1键值对。</p>
+</li>
+<li><p>List：列表是简单的字符串列表，按照插入顺序排序。可以在列表的头部或尾部添加元素。</p>
+<pre><code class="shell">redis 127.0.0.1:6379&gt; lpush w3cschool.cn redis
+(integer) 1
+redis 127.0.0.1:6379&gt; lpush w3cschool.cn mongodb
+(integer) 2
+redis 127.0.0.1:6379&gt; lpush w3cschool.cn rabitmq
+(integer) 3
+redis 127.0.0.1:6379&gt; lrange w3cschool.cn 0 10
+1) &quot;rabitmq&quot;
+2) &quot;mongodb&quot;
+3) &quot;redis&quot;
+redis 127.0.0.1:6379&gt;
+</code></pre>
+<p>列表最多可存储 2^32 -1元素。</p>
+</li>
+<li><p>Set：是string类型的无序集合，因为是通过哈希表实现的，所以添加、删除、查找的复杂度都是O(1)。</p>
+<pre><code class="shell">redis 127.0.0.1:6379&gt; sadd w3cschool.cn redis
+(integer) 1
+redis 127.0.0.1:6379&gt; sadd w3cschool.cn mongodb
+(integer) 1
+redis 127.0.0.1:6379&gt; sadd w3cschool.cn rabitmq
+(integer) 1
+redis 127.0.0.1:6379&gt; sadd w3cschool.cn rabitmq
+(integer) 0
+redis 127.0.0.1:6379&gt; smembers w3cschool.cn
+1) &quot;rabitmq&quot;
+2) &quot;mongodb&quot;
+3) &quot;redis&quot;
+</code></pre>
+<p><strong>注意：</strong>以上实例中 <code>rabitmq</code> 添加了两次，但根据集合内元素的唯一性，第二次插入的元素将被忽略。</p>
+<p>集合中最大的成员数为 232-1.</p>
+</li>
+<li><p>zset：<code>Redis zset</code> 和<code> set</code> 一样也是 <code>string</code> 类型元素的集合,且不允许重复的成员。不同的是每个元素都会关联一个 <code>double</code> 类型的分数。<code>redis</code> 正是通过分数来为集合中的成员进行从小到大的排序。<code>zset</code> 的成员是唯一的,但分数<code>(score)</code>却可以重复。</p>
+<pre><code class="shell">redis 127.0.0.1:6379&gt; zadd w3cschool.cn 0 redis
+(integer) 1
+redis 127.0.0.1:6379&gt; zadd w3cschool.cn 0 mongodb
+(integer) 1
+redis 127.0.0.1:6379&gt; zadd w3cschool.cn 0 rabitmq
+(integer) 1
+redis 127.0.0.1:6379&gt; zadd w3cschool.cn 0 rabitmq
+(integer) 0
+redis 127.0.0.1:6379&gt; ZRANGEBYSCORE w3cschool.cn 0 1000
+1) &quot;redis&quot;
+2) &quot;mongodb&quot;
+3) &quot;rabitmq&quot;
+</code></pre>
+</li>
+</ul>
+<h1 id="Redis命令"><a href="#Redis命令" class="headerlink" title="Redis命令"></a>Redis命令</h1><h2 id="Redis-键"><a href="#Redis-键" class="headerlink" title="Redis 键"></a>Redis 键</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DEL key</td>
+<td>在key存在时删除key</td>
+</tr>
+<tr>
+<td>DUMP key</td>
+<td>序列化给定key，并返回序列化的值</td>
+</tr>
+<tr>
+<td>EXISIT key</td>
+<td>检查给定的key是否存在</td>
+</tr>
+<tr>
+<td>EXPIRE key seconds</td>
+<td>为给定的key设置过期时间</td>
+</tr>
+<tr>
+<td>EXPIREAT key timestamp</td>
+<td>用于为给定的key设置过期事件，但是此命令接收的参数是UNXI时间戳</td>
+</tr>
+<tr>
+<td>PEXPIRE key milliseconds</td>
+<td>设置key的过期时间，以毫秒计</td>
+</tr>
+<tr>
+<td>PEXPIREAT key millisecond-timestamp</td>
+<td>设置key过期时间的时间戳，以毫秒计</td>
+</tr>
+<tr>
+<td>MOVE key db</td>
+<td>将当前数据库的key移动到给定的数据库db当中</td>
+</tr>
+<tr>
+<td>PERSIST key</td>
+<td>移除key的过期时间，key将持久保持</td>
+</tr>
+<tr>
+<td>PTTL key</td>
+<td>以毫秒为单位返回key的剩余过期时间</td>
+</tr>
+<tr>
+<td>TTL key</td>
+<td>以秒为单位，返回给定key的剩余生存时间</td>
+</tr>
+<tr>
+<td>RANDOMKEY</td>
+<td>从当前数据库中随机返回一个key</td>
+</tr>
+<tr>
+<td>RENAME key newkey</td>
+<td>修改key的名称</td>
+</tr>
+<tr>
+<td>RENAMENX key newkey</td>
+<td>仅当newkey不存在时，将key改名为newkey</td>
+</tr>
+<tr>
+<td>TYPE key</td>
+<td>返回key所存储的值的类型</td>
+</tr>
+</tbody></table>
 
     </div>
     
