@@ -175,7 +175,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/note/" style="color: #ffa2c4">
+                <a href="/tags/note/" style="color: #03a9f4">
                     note
                 </a>
             </span>
@@ -189,7 +189,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/Java-Web/" style="color: #00a596">
+                <a href="/tags/Java-Web/" style="color: #ffa2c4">
                     Java Web
                 </a>
             </span>
@@ -287,7 +287,7 @@ redis 127.0.0.1:6379&gt; ZRANGEBYSCORE w3cschool.cn 0 1000
 </code></pre>
 </li>
 </ul>
-<h1 id="Redis命令"><a href="#Redis命令" class="headerlink" title="Redis命令"></a>Redis命令</h1><h2 id="Redis-键"><a href="#Redis-键" class="headerlink" title="Redis 键"></a>Redis 键</h2><table>
+<h1 id="Redis命令"><a href="#Redis命令" class="headerlink" title="Redis命令"></a>Redis命令</h1><h2 id="Redis键（key）"><a href="#Redis键（key）" class="headerlink" title="Redis键（key）"></a>Redis键（key）</h2><table>
 <thead>
 <tr>
 <th>命令</th>
@@ -353,6 +353,94 @@ redis 127.0.0.1:6379&gt; ZRANGEBYSCORE w3cschool.cn 0 1000
 <tr>
 <td>TYPE key</td>
 <td>返回key所存储的值的类型</td>
+</tr>
+</tbody></table>
+<h2 id="Redis字符串（String）"><a href="#Redis字符串（String）" class="headerlink" title="Redis字符串（String）"></a>Redis字符串（String）</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SET key value</td>
+<td>设置指定的key的值</td>
+</tr>
+<tr>
+<td>GET key</td>
+<td>获取指定的key的值</td>
+</tr>
+<tr>
+<td>GETRANGE key start end</td>
+<td>返回指定范围的字符串子串</td>
+</tr>
+<tr>
+<td>GETSET key offest</td>
+<td>将给定的key的值设为value，并返回key的旧值</td>
+</tr>
+<tr>
+<td>GETBIT key offset</td>
+<td>对key所存的字符串值，获取指定偏移量上的位</td>
+</tr>
+<tr>
+<td>MGET key1[key2..]</td>
+<td>获取一个或多个key的值</td>
+</tr>
+<tr>
+<td>SETBIT key offset value</td>
+<td>对 key 所储存的字符串值，设置或清除指定偏移量上的位</td>
+</tr>
+<tr>
+<td>SETTEX key seconds value</td>
+<td>将value关联到key，并将key的过期时间设为seconds</td>
+</tr>
+<tr>
+<td>SETNX key value</td>
+<td>只有key不存在的时候才设置key的值</td>
+</tr>
+<tr>
+<td>SETRANGE key offset value</td>
+<td>用value参数覆写给定key所存储的字符串值，从偏移量offset开始</td>
+</tr>
+<tr>
+<td>STRLEN key</td>
+<td>返回key所存储的字符串值的长度</td>
+</tr>
+<tr>
+<td>MSET key value [key value..]</td>
+<td>同时设置多个key-value对</td>
+</tr>
+<tr>
+<td>MSETNX key value [key value..]</td>
+<td>同时设置多个key-value对，仅当key不存在时才执行</td>
+</tr>
+<tr>
+<td>PSETEX key milliseconds value</td>
+<td>以毫秒为单位设置key的过期时间</td>
+</tr>
+<tr>
+<td>INCR key</td>
+<td>将key存储的值加一</td>
+</tr>
+<tr>
+<td>INCRBY key increment</td>
+<td>将key所存的值加上给定的增量值</td>
+</tr>
+<tr>
+<td>INCRBYFLOAT key increment</td>
+<td>将key所存的值加上给定的浮点型增量值</td>
+</tr>
+<tr>
+<td>DECR key decrement</td>
+<td>将key所存的值减一</td>
+</tr>
+<tr>
+<td>DECRBY key decrement</td>
+<td>将key所存的值减去给定的增量值</td>
+</tr>
+<tr>
+<td>APPEND key value</td>
+<td>如果key已经存在并且是一个字符串，将vale追加到key原来值的末尾</td>
 </tr>
 </tbody></table>
 
